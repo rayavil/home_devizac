@@ -3,118 +3,475 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEVIZAC.TOP | Control Center</title>
+    <title>Devizac - Desarrollo Tecnológico en Zacatecas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --neon-blue: #00f3ff;
-            --neon-purple: #9d00ff;
-            --neon-orange: #ff6a00;
-            --bg-dark: #0a0a0a;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        :root {
+            --primary: #00ff9d;
+            --secondary: #00d4ff;
+            --accent: #ff006e;
+            --dark: #0a0e27;
+            --darker: #050816;
+        }
+
         body {
-            font-family: 'JetBrains Mono', monospace;
-            background-color: var(--bg-dark);
-            background-image: url('./image_4.png');
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--darker);
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('Gemini_Generated_Image_133vzu133vzu133v.png');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
+            opacity: 0.3;
+            filter: brightness(0.6) contrast(1.2);
+            animation: subtlePulse 20s ease-in-out infinite;
+        }
+
+        @keyframes subtlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .overlay {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 8, 22, 0.85); /* Un poco más oscuro para mejor contraste */
-            background-blend-mode: multiply;
-        }
-
-        .scanlines::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(
-                transparent 0px, transparent 2px,
-                rgba(0, 243, 255, 0.03) 3px, rgba(0, 243, 255, 0.03) 4px
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(0, 255, 157, 0.1) 0%, 
+                rgba(10, 14, 39, 0.9) 40%,
+                rgba(5, 8, 22, 0.95) 100%
             );
-            pointer-events: none;
-            z-index: 10;
         }
 
-        .typewriter h1 {
-            overflow: hidden;
-            border-right: .15em solid var(--neon-orange);
-            white-space: nowrap;
-            margin: 0 auto;
-            letter-spacing: .10em;
-            animation: typing 2.5s steps(30, end), blink-caret .75s step-end infinite;
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 157, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 157, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
         }
 
-        @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--neon-orange); } }
-
-        .floating-ui { animation: float 6s ease-in-out infinite; }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
         }
 
-        .contact-link:hover {
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+        .content {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .logo-container {
+            margin-bottom: 3rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(3.5rem, 12vw, 8rem);
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--primary) 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite, glitch 5s infinite;
+            position: relative;
+            text-shadow: 0 0 30px rgba(0, 255, 157, 0.5);
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-2px, 2px); }
+            94% { transform: translate(2px, -2px); }
+            96% { transform: translate(-2px, -2px); }
+            98% { transform: translate(2px, 2px); }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tagline {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+            letter-spacing: 0.05em;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+            animation: fadeIn 1s ease-out 0.6s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .tech-badge {
+            padding: 0.6rem 1.5rem;
+            background: rgba(0, 255, 157, 0.1);
+            border: 1px solid rgba(0, 255, 157, 0.3);
+            border-radius: 30px;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-weight: 600;
+            letter-spacing: 0.05em;
             transition: all 0.3s ease;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 157, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .tech-badge:hover::before {
+            left: 100%;
+        }
+
+        .tech-badge:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            box-shadow: 0 5px 20px rgba(0, 255, 157, 0.3);
+        }
+
+        .contact-section {
+            text-align: center;
+            animation: fadeInUp 1s ease-out 0.9s backwards;
+        }
+
+        .contact-label {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+        }
+
+        .contact-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, rgba(0, 255, 157, 0.15), rgba(0, 212, 255, 0.15));
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-email::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .contact-email:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .contact-email:hover {
+            transform: scale(1.05);
+            color: var(--darker);
+            box-shadow: 0 10px 40px rgba(0, 255, 157, 0.4);
+        }
+
+        .contact-email span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Partículas flotantes */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% {
+                transform: translateY(-100vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        /* Circuitos decorativos */
+        .circuit {
+            position: absolute;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            border-radius: 8px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .circuit-1 {
+            width: 150px;
+            height: 150px;
+            top: 10%;
+            right: 5%;
+            animation-delay: 0s;
+        }
+
+        .circuit-2 {
+            width: 100px;
+            height: 100px;
+            bottom: 15%;
+            left: 8%;
+            animation-delay: 1s;
+        }
+
+        .circuit-3 {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.05);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content {
+                padding: 1.5rem;
+            }
+
+            .logo-container {
+                margin-bottom: 2rem;
+            }
+
+            .tagline {
+                margin-bottom: 2rem;
+            }
+
+            .tech-stack {
+                margin-bottom: 3rem;
+                gap: 0.8rem;
+            }
+
+            .circuit {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tech-badge {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .contact-email {
+                padding: 0.8rem 1.5rem;
+                gap: 0.5rem;
+            }
+
+            .icon {
+                width: 20px;
+                height: 20px;
+            }
         }
     </style>
 </head>
-<body class="scanlines">
-    <div class="overlay"></div>
-
-    <header class="relative z-30 flex justify-between items-start p-6 w-full">
-        <div class="text-[10px] md:text-xs text-blue-400 font-bold border-l-2 border-blue-500 pl-3">
-            <p>AUTH_USER: <span class="text-white uppercase">Ing. Ramón Ávila</span></p>
-            <p>ACCESS_LVL: <span class="text-slate-400">Root Administrator</span></p>
-        </div>
-        <div class="hidden md:block text-[10px] text-slate-500 text-right uppercase tracking-widest">
-            <p>ZACATECAS_NODE_2026</p>
-            <p class="text-green-500">System_Status: Stable</p>
-        </div>
-    </header>
-
-    <main class="relative z-20 h-[75vh] flex flex-col items-center justify-center text-center px-4">
+<body>
+    <div class="background-container">
+        <div class="background-image"></div>
+        <div class="overlay"></div>
+        <div class="grid-overlay"></div>
         
-        <div class="text-xs text-blue-300 mb-6 opacity-60">
-            <span>> cd /dev/izac/projects_</span>
+        <!-- Circuitos decorativos -->
+        <div class="circuit circuit-1"></div>
+        <div class="circuit circuit-2"></div>
+        <div class="circuit circuit-3"></div>
+    </div>
+
+    <!-- Partículas flotantes -->
+    <div class="particles" id="particles"></div>
+
+    <div class="content">
+        <div class="logo-container">
+            <h1 class="logo">DEVIZAC</h1>
         </div>
 
-        <div class="typewriter mb-4">
-            <h1 class="text-5xl md:text-8xl font-extrabold text-white py-2 px-6 inline-block bg-black/50 backdrop-blur-md border-b-4 border-blue-500">
-                devizac.top
-            </h1>
+        <p class="tagline">Desarrollo Tecnológico desde el Corazón de Zacatecas</p>
+
+        <div class="tech-stack">
+            <div class="tech-badge">Web Development</div>
+            <div class="tech-badge">Cloud Solutions</div>
+            <div class="tech-badge">AI Integration</div>
+            <div class="tech-badge">Mobile Apps</div>
+            <div class="tech-badge">DevOps</div>
         </div>
 
-        <p class="text-sm md:text-base text-slate-400 tracking-[0.4em] uppercase mb-12">
-            Desarrollo de Sistemas y Consultoría
-        </p>
-
-        <div class="floating-ui w-full max-w-xs">
-            <a href="mailto:ramonavil@gmail.com" class="contact-link block p-4 border border-white/10 bg-white/5 backdrop-blur-lg rounded-md transition-all group">
-                <p class="text-[10px] text-slate-500 uppercase mb-1 tracking-tighter">Contact Secure Line</p>
-                <p class="text-white text-sm font-bold group-hover:text-blue-400 transition-colors">ramonavil@gmail.com</p>
+        <div class="contact-section">
+            <div class="contact-label">Conectemos</div>
+            <a href="mailto:contact@devizac.top" class="contact-email">
+                <svg class="icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                <span>contact@devizac.top</span>
             </a>
         </div>
+    </div>
 
-    </main>
-    
-    <footer class="absolute bottom-6 w-full text-center z-20 text-slate-600 text-[9px] tracking-[0.3em]">
-        <p>POWERED BY COOLIFY V4 | CLOUD_SERVER: CONTABO-MASTER</p>
-    </footer>
+    <script>
+        // Generar partículas flotantes
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = window.innerWidth > 768 ? 30 : 15;
 
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Efecto de movimiento del mouse sobre el fondo
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX / window.innerWidth - 0.5) * 20;
+            const moveY = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            document.querySelector('.background-image').style.transform = 
+                `translate(${moveX}px, ${moveY}px) scale(1.1)`;
+        });
+
+        // Efecto parallax en scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            document.querySelector('.background-image').style.transform = 
+                `translateY(${scrolled * 0.5}px) scale(1.1)`;
+        });
+    </script>
 </body>
 </html>
